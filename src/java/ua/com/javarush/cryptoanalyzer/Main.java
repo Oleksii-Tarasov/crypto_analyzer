@@ -1,7 +1,9 @@
 package ua.com.javarush.cryptoanalyzer;
 
+import ua.com.javarush.cryptoanalyzer.consoleui.ConsoleMenu;
+
 public class Main {
     public static void main(String[] args) {
-        System.out.println("*# Caesar cipher #*");
+        new ConsoleMenu().startDialog();
     }
 }
