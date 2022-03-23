@@ -1,12 +1,11 @@
 package ua.com.javarush.cryptoanalyzer.cryptography;
 
-import ua.com.javarush.cryptoanalyzer.constants.ConsoleMessage;
-
 import java.io.*;
-import java.nio.charset.StandardCharsets;
 
-import static ua.com.javarush.cryptoanalyzer.constants.Alphabet.ALPHABET;
-import static ua.com.javarush.cryptoanalyzer.constants.Alphabet.alphabetSize;
+import static ua.com.javarush.cryptoanalyzer.constants.Constants.Alphabet.ALPHABET;
+import static ua.com.javarush.cryptoanalyzer.constants.Constants.Alphabet.ALPHABET_SIZE;
+import static ua.com.javarush.cryptoanalyzer.constants.Constants.ConsoleMessages.ERROR_READ_FILE;
+import static ua.com.javarush.cryptoanalyzer.constants.Constants.ConsoleMessages.FILE_NOT_FOUND;
 
 public class Encoder {
 
@@ -23,8 +22,8 @@ public class Encoder {
                 }
                 else {
                     int indexForEncryption = indexCharacterFromAlphabet + encryptionKey;
-                    if (indexForEncryption >= alphabetSize) {
-                        indexForEncryption = indexForEncryption - alphabetSize;
+                    if (indexForEncryption >= ALPHABET_SIZE) {
+                        indexForEncryption = indexForEncryption - ALPHABET_SIZE;
                     }
                     writer.write(ALPHABET.get(indexForEncryption));
                 }
@@ -32,8 +31,9 @@ public class Encoder {
             writer.flush();
 
         } catch (FileNotFoundException e) {
-            System.out.println(ConsoleMessage.FILE_NOT_FOUND);
+            System.out.println(FILE_NOT_FOUND);
         } catch (IOException e) {
+            System.out.println(ERROR_READ_FILE);
             e.printStackTrace();
         }
     }
