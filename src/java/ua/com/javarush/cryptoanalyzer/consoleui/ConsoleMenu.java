@@ -1,7 +1,5 @@
 package ua.com.javarush.cryptoanalyzer.consoleui;
 
-import ua.com.javarush.cryptoanalyzer.constants.ConsoleMessage;
-import ua.com.javarush.cryptoanalyzer.constants.ConsoleOption;
 import ua.com.javarush.cryptoanalyzer.cryptography.BruteForceDecoder;
 import ua.com.javarush.cryptoanalyzer.cryptography.Decoder;
 import ua.com.javarush.cryptoanalyzer.cryptography.Encoder;
@@ -11,7 +9,10 @@ import java.nio.file.InvalidPathException;
 import java.nio.file.Path;
 import java.util.*;
 
-import static ua.com.javarush.cryptoanalyzer.constants.Alphabet.alphabetSize;
+import static ua.com.javarush.cryptoanalyzer.constants.Constants.Alphabet.ALPHABET_SIZE;
+import static ua.com.javarush.cryptoanalyzer.constants.Constants.Common.DOUBLE_SLASH;
+import static ua.com.javarush.cryptoanalyzer.constants.Constants.ConsoleMessages.*;
+import static ua.com.javarush.cryptoanalyzer.constants.Constants.ConsoleOptions.*;
 
 public class ConsoleMenu {
     private Scanner console = new Scanner(System.in);
@@ -23,38 +24,39 @@ public class ConsoleMenu {
         boolean isWorking = true;
 
         while (isWorking) {
-            System.out.print(ConsoleOption.MENU_OPTIONS);
+            System.out.print(MENU_OPTIONS);
             String selectedOption = console.nextLine();
 
-            if (selectedOption.equals("Q")) {
-                System.out.println(ConsoleMessage.EXIT);
+            if ("Q".equals(selectedOption)) {
+                System.out.println(EXIT);
                 console.close();
                 isWorking = false;
-            } else if (selectedOption.equals("E") || selectedOption.equals("D") || selectedOption.equals("DBF")) {
+            } else if ("E".equals(selectedOption) || "D".equals(selectedOption) || "DBF".equals(selectedOption)) {
                 putInputFilePath();
                 putOutputFilePath();
-                if (selectedOption.equals("E") || selectedOption.equals("D")) {
+                if ("E".equals(selectedOption) || "D".equals(selectedOption)) {
                     putEncryptionKey();
                 }
                 switchStrategy(selectedOption);
             } else {
-                System.out.println(ConsoleMessage.ILLEGAL_OPERATION);
+                System.out.println(ILLEGAL_OPERATION);
             }
         }
     }
 
     private void switchStrategy(String selectedOption) {
+        Decoder decoder = new Decoder();
         switch (selectedOption) {
             case "E" -> {
                 new Encoder().startEncryption(inputFilePath, outputFilePath, encryptionKey);
                 System.out.println("* File encrypted -> " + outputFilePath);
             }
             case "D" -> {
-                new Decoder().startDecryption(inputFilePath, outputFilePath, encryptionKey);
+                decoder.startDecryption(inputFilePath, outputFilePath, encryptionKey);
                 System.out.println("* File decrypted -> " + outputFilePath);
             }
             case "DBF" -> {
-                new BruteForceDecoder().startBruteForceDecryption(inputFilePath, outputFilePath);
+                new BruteForceDecoder(decoder).startBruteForceDecryption(inputFilePath, outputFilePath);
                 System.out.println("* File decrypted with brute force -> " + outputFilePath);
             }
         }
@@ -64,19 +66,19 @@ public class ConsoleMenu {
         boolean isWorking = true;
 
         while (isWorking) {
-            System.out.print(ConsoleOption.ENTER_INPUT_FILE);
+            System.out.print(ENTER_INPUT_FILE);
             inputFilePath = console.nextLine();
 
             try {
                 if (!Files.isRegularFile(Path.of(inputFilePath))) {
-                    System.out.println(ConsoleMessage.FILE_NOT_FOUND);
+                    System.out.println(FILE_NOT_FOUND);
                 }
                 else {
                     isWorking = false;
                 }
             }
             catch (InvalidPathException e) {
-                System.out.println(ConsoleMessage.FILE_NOT_FOUND);
+                System.out.println(FILE_NOT_FOUND);
             }
         }
     }
@@ -85,22 +87,22 @@ public class ConsoleMenu {
         boolean isWorking = true;
 
         while (isWorking) {
-            System.out.print(ConsoleOption.ENTER_OUTPUT_FOLDER);
+            System.out.print(ENTER_OUTPUT_FOLDER);
             Path folderPath = Path.of(console.nextLine());
 
             try {
                 if (Files.exists(folderPath) && Files.isDirectory(folderPath)) {
-                    System.out.print(ConsoleOption.ENTER_OUTPUT_FILE_NAME);
+                    System.out.print(ENTER_OUTPUT_FILE_NAME);
                     String fileName = console.nextLine() + ".txt";
-                    outputFilePath = folderPath + "\\" + fileName;
+                    outputFilePath = folderPath + DOUBLE_SLASH + fileName;
                     isWorking = false;
                 }
                 else {
-                    System.out.println(ConsoleMessage.DIRECTORY_NOT_FOUND);
+                    System.out.println(DIRECTORY_NOT_FOUND);
                 }
             }
             catch (InvalidPathException e) {
-                System.out.println(ConsoleMessage.DIRECTORY_NOT_FOUND);
+                System.out.println(DIRECTORY_NOT_FOUND);
             }
         }
     }
@@ -109,17 +111,17 @@ public class ConsoleMenu {
         boolean isWorking = true;
 
         while (isWorking) {
-            System.out.print(ConsoleOption.ENTER_ENCRYPTION_KEY);
+            System.out.print(ENTER_ENCRYPTION_KEY);
             try {
                 encryptionKey = Integer.parseInt(console.nextLine());
-                if (encryptionKey <= 0 || encryptionKey >= alphabetSize) {
-                    System.out.printf("* Key should be between 0 and %d *\n", alphabetSize);
+                if (encryptionKey <= 0 || encryptionKey >= ALPHABET_SIZE) {
+                    System.out.printf("* Key should be between 0 and %d *\n", ALPHABET_SIZE);
                 }
                 else {
                     isWorking = false;
                 }
             } catch (NumberFormatException e) {
-                System.out.println(ConsoleMessage.INVALID_KEY);
+                System.out.println(INVALID_KEY);
             }
         }
     }

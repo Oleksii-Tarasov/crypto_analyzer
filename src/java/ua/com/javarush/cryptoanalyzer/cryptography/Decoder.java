@@ -1,11 +1,11 @@
 package ua.com.javarush.cryptoanalyzer.cryptography;
 
-import ua.com.javarush.cryptoanalyzer.constants.ConsoleMessage;
-
 import java.io.*;
 
-import static ua.com.javarush.cryptoanalyzer.constants.Alphabet.ALPHABET;
-import static ua.com.javarush.cryptoanalyzer.constants.Alphabet.alphabetSize;
+import static ua.com.javarush.cryptoanalyzer.constants.Constants.Alphabet.ALPHABET;
+import static ua.com.javarush.cryptoanalyzer.constants.Constants.Alphabet.ALPHABET_SIZE;
+import static ua.com.javarush.cryptoanalyzer.constants.Constants.ConsoleMessages.ERROR_READ_FILE;
+import static ua.com.javarush.cryptoanalyzer.constants.Constants.ConsoleMessages.FILE_NOT_FOUND;
 
 public class Decoder {
     public void startDecryption(String inputFilePath, String outputFilePath, int encryptionKey) {
@@ -22,15 +22,16 @@ public class Decoder {
                 else {
                     int indexForDecryption = indexCharacterFromAlphabet - encryptionKey;
                     if (indexForDecryption < 0) {
-                        indexForDecryption = alphabetSize + indexForDecryption;
+                        indexForDecryption = ALPHABET_SIZE + indexForDecryption;
                     }
                     writer.write(ALPHABET.get(indexForDecryption));
                 }
             }
             writer.flush();
         } catch (FileNotFoundException e) {
-            System.out.println(ConsoleMessage.FILE_NOT_FOUND);
+            System.out.println(FILE_NOT_FOUND);
         } catch (IOException e) {
+            System.out.println(ERROR_READ_FILE);
             e.printStackTrace();
         }
     }
