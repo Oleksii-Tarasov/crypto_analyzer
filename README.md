@@ -12,7 +12,7 @@ Project launch:
 
 `C:\>java -Dfile.encoding=UTF-8 -Dconsole.encoding=UTF-8 -jar cryptoanalyzer.jar`
 
-The executable `cryptoanalyzer.jar` file is located in the `dist` project directory.
+The executable `cryptoanalyzer_1.2.jar` file is located in the `dist` project directory.
 ___
 ###Restrictions
 The program works with .txt format files. With texts written in Cyrillic.

@@ -16,9 +16,6 @@ import static ua.com.javarush.cryptoanalyzer.constants.Constants.ConsoleOptions.
 
 public class ConsoleMenu {
     private Scanner console = new Scanner(System.in);
-    private String inputFilePath;
-    private String outputFilePath;
-    private int encryptionKey;
 
     public void startDialog() {
         boolean isWorking = true;
@@ -32,19 +29,20 @@ public class ConsoleMenu {
                 console.close();
                 isWorking = false;
             } else if ("E".equals(selectedOption) || "D".equals(selectedOption) || "DBF".equals(selectedOption)) {
-                putInputFilePath();
-                putOutputFilePath();
+                String inputFilePath = putInputFilePath();
+                String outputFilePath = putOutputFilePath();
+                int encryptionKey = 0;
                 if ("E".equals(selectedOption) || "D".equals(selectedOption)) {
-                    putEncryptionKey();
+                    encryptionKey = putEncryptionKey();
                 }
-                switchStrategy(selectedOption);
+                switchStrategy(selectedOption, inputFilePath, outputFilePath, encryptionKey);
             } else {
                 System.out.println(ILLEGAL_OPERATION);
             }
         }
     }
 
-    private void switchStrategy(String selectedOption) {
+    private void switchStrategy(String selectedOption, String inputFilePath, String outputFilePath, int encryptionKey) {
         Decoder decoder = new Decoder();
         switch (selectedOption) {
             case "E" -> {
@@ -62,8 +60,9 @@ public class ConsoleMenu {
         }
     }
 
-    private void putInputFilePath() {
+    private String putInputFilePath() {
         boolean isWorking = true;
+        String inputFilePath = "";
 
         while (isWorking) {
             System.out.print(ENTER_INPUT_FILE);
@@ -81,10 +80,12 @@ public class ConsoleMenu {
                 System.out.println(FILE_NOT_FOUND);
             }
         }
+        return inputFilePath;
     }
 
-    private void putOutputFilePath() {
+    private String putOutputFilePath() {
         boolean isWorking = true;
+        String outputFilePath = "";
 
         while (isWorking) {
             System.out.print(ENTER_OUTPUT_FOLDER);
@@ -105,10 +106,12 @@ public class ConsoleMenu {
                 System.out.println(DIRECTORY_NOT_FOUND);
             }
         }
+        return outputFilePath;
     }
 
-    private void putEncryptionKey() {
+    private int putEncryptionKey() {
         boolean isWorking = true;
+        int encryptionKey = 0;
 
         while (isWorking) {
             System.out.print(ENTER_ENCRYPTION_KEY);
@@ -124,5 +127,6 @@ public class ConsoleMenu {
                 System.out.println(INVALID_KEY);
             }
         }
+        return encryptionKey;
     }
 }

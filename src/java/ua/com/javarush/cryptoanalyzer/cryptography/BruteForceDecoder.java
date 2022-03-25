@@ -64,7 +64,6 @@ public class BruteForceDecoder {
             System.out.println(FILE_NOT_FOUND);
         } catch (IOException e) {
             System.out.println(ERROR_READ_FILE);
-            e.printStackTrace();
         }
     }
 }
