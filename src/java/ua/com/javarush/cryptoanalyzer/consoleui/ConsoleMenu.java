@@ -10,57 +10,82 @@ import java.nio.file.Path;
 import java.util.*;
 
 import static ua.com.javarush.cryptoanalyzer.constants.Constants.Alphabet.ALPHABET_SIZE;
+import static ua.com.javarush.cryptoanalyzer.constants.Constants.Common.DASH;
 import static ua.com.javarush.cryptoanalyzer.constants.Constants.Common.DOUBLE_SLASH;
 import static ua.com.javarush.cryptoanalyzer.constants.Constants.ConsoleMessages.*;
 import static ua.com.javarush.cryptoanalyzer.constants.Constants.ConsoleOptions.*;
 
 public class ConsoleMenu {
-    private Scanner console = new Scanner(System.in);
+    private final Scanner console = new Scanner(System.in);
 
     public void startDialog() {
+        System.out.println(GREETINGS);
         boolean isWorking = true;
 
         while (isWorking) {
-            System.out.print(MENU_OPTIONS);
+            for (Operation operation : Operation.values()) {
+                System.out.println(operation.getOperationToken() + DASH + operation.getDescription());
+            }
+            System.out.print(ENTER_OPTIONS);
             String selectedOption = console.nextLine();
 
-            if ("Q".equals(selectedOption)) {
-                System.out.println(EXIT);
-                console.close();
-                isWorking = false;
-            } else if ("E".equals(selectedOption) || "D".equals(selectedOption) || "DBF".equals(selectedOption)) {
-                String inputFilePath = putInputFilePath();
-                String outputFilePath = putOutputFilePath();
-                int encryptionKey = 0;
-                if ("E".equals(selectedOption) || "D".equals(selectedOption)) {
-                    encryptionKey = putEncryptionKey();
+            try {
+                boolean withBruteForce = true;
+                switch (Operation.getOperationByToken(selectedOption)) {
+                    case EXIT -> isWorking = processExit();
+                    case ENCODER -> processEncryption();
+                    case DECODER -> processDecryption(!withBruteForce);
+                    case BRUTEFORCE -> processDecryption(withBruteForce);
                 }
-                switchStrategy(selectedOption, inputFilePath, outputFilePath, encryptionKey);
-            } else {
-                System.out.println(ILLEGAL_OPERATION);
+            }
+            catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
             }
         }
     }
 
-    private void switchStrategy(String selectedOption, String inputFilePath, String outputFilePath, int encryptionKey) {
-        Decoder decoder = new Decoder();
-        switch (selectedOption) {
-            case "E" -> {
-                new Encoder().startEncryption(inputFilePath, outputFilePath, encryptionKey);
-                System.out.println("* File encrypted -> " + outputFilePath);
-            }
-            case "D" -> {
-                decoder.startDecryption(inputFilePath, outputFilePath, encryptionKey);
-                System.out.println("* File decrypted -> " + outputFilePath);
-            }
-            case "DBF" -> {
-                new BruteForceDecoder(decoder).startBruteForceDecryption(inputFilePath, outputFilePath);
-                System.out.println("* File decrypted with brute force -> " + outputFilePath);
-            }
+    private boolean processExit() {
+        System.out.println(EXIT);
+        console.close();
+        return false;
+    }
+
+    private void processEncryption() {
+        String inputFilePath = enterInputFilePath();
+        String outputFilePath = enterOutputFilePath();
+        int encryptionKey = enterEncryptionKey();
+
+        try {
+            new Encoder().startEncryption(inputFilePath, outputFilePath , encryptionKey);
+            System.out.println(FILE_ENCRYPTED + outputFilePath);
+        }
+        catch (Exception e) {
+            System.out.println(e.getMessage());
         }
     }
 
-    private String putInputFilePath() {
+    private void processDecryption(boolean withBruteForce) {
+        String inputFilePath = enterInputFilePath();
+        String outputFilePath = enterOutputFilePath();
+        int encryptionKey;
+
+        if (!withBruteForce) {
+            encryptionKey = enterEncryptionKey();
+        }
+        else {
+            encryptionKey = BruteForceDecoder.calculatingEncryptionKey(inputFilePath);
+        }
+
+        try {
+            new Decoder().startDecryption(inputFilePath, outputFilePath, encryptionKey);
+            System.out.println(FILE_DECRYPTED + outputFilePath);
+        }
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    private String enterInputFilePath() {
         boolean isWorking = true;
         String inputFilePath = "";
 
@@ -83,7 +108,7 @@ public class ConsoleMenu {
         return inputFilePath;
     }
 
-    private String putOutputFilePath() {
+    private String enterOutputFilePath() {
         boolean isWorking = true;
         String outputFilePath = "";
 
@@ -109,7 +134,7 @@ public class ConsoleMenu {
         return outputFilePath;
     }
 
-    private int putEncryptionKey() {
+    private int enterEncryptionKey() {
         boolean isWorking = true;
         int encryptionKey = 0;
 

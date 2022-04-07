@@ -14,13 +14,8 @@ import static ua.com.javarush.cryptoanalyzer.constants.Constants.ConsoleMessages
 import static ua.com.javarush.cryptoanalyzer.constants.Constants.ConsoleMessages.FILE_NOT_FOUND;
 
 public class BruteForceDecoder {
-    private Decoder decoder;
-
-    public BruteForceDecoder(Decoder decoder) {
-        this.decoder = decoder;
-    }
-
-    public void startBruteForceDecryption(String inputFilePath, String outputFilePath) {
+    public static int calculatingEncryptionKey(String inputFilePath) {
+        int encryptionKey = 0;
         try {
             BufferedReader reader = new BufferedReader(new FileReader(inputFilePath));
             Map<Character, Integer> mapCharacters = new TreeMap<>();
@@ -54,8 +49,7 @@ public class BruteForceDecoder {
                 if (characterFromFile == maxRepeatedCharacter) {
                     int indexCharacterFromAlphabet = ALPHABET.indexOf(characterFromFile);
                     int indexOfSpace = ALPHABET.indexOf(' ');
-                    int encryptionKey = ALPHABET_SIZE - (indexOfSpace - indexCharacterFromAlphabet);
-                    decoder.startDecryption(inputFilePath, outputFilePath, encryptionKey);
+                    encryptionKey = ALPHABET_SIZE - (indexOfSpace - indexCharacterFromAlphabet);
                     break;
                 }
             }
@@ -65,5 +59,6 @@ public class BruteForceDecoder {
         } catch (IOException e) {
             System.out.println(ERROR_READ_FILE);
         }
+        return encryptionKey;
     }
 }
