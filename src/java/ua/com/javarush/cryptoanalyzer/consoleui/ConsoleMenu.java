@@ -7,13 +7,13 @@ import ua.com.javarush.cryptoanalyzer.cryptography.Encoder;
 import java.nio.file.Files;
 import java.nio.file.InvalidPathException;
 import java.nio.file.Path;
-import java.util.*;
+import java.util.Scanner;
 
-import static ua.com.javarush.cryptoanalyzer.constants.Constants.Alphabet.ALPHABET_SIZE;
-import static ua.com.javarush.cryptoanalyzer.constants.Constants.Common.DASH;
-import static ua.com.javarush.cryptoanalyzer.constants.Constants.Common.DOUBLE_SLASH;
-import static ua.com.javarush.cryptoanalyzer.constants.Constants.ConsoleMessages.*;
-import static ua.com.javarush.cryptoanalyzer.constants.Constants.ConsoleOptions.*;
+import static ua.com.javarush.cryptoanalyzer.constants.Alphabets.ALPHABET_SIZE;
+import static ua.com.javarush.cryptoanalyzer.constants.Common.DASH;
+import static ua.com.javarush.cryptoanalyzer.constants.Common.DOUBLE_SLASH;
+import static ua.com.javarush.cryptoanalyzer.constants.ConsoleMessages.*;
+import static ua.com.javarush.cryptoanalyzer.constants.ConsoleOptions.*;
 
 public class ConsoleMenu {
     private final Scanner console = new Scanner(System.in);
