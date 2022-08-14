@@ -3,8 +3,8 @@ package ua.com.javarush.cryptoanalyzer.constants;
 import java.util.Arrays;
 import java.util.List;
 
-public final class Alphabets {
-    private Alphabets() {}
+public final class Alphabet {
+    private Alphabet() {}
 
     public static final List<Character> ALPHABET = Arrays.asList('а', 'б', 'в',
             'г', 'д', 'е', 'ж', 'з', 'и', 'к', 'л', 'м', 'н', 'о', 'п', 'р', 'с', 'т', 'у',

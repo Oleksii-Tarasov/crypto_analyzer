@@ -8,10 +8,10 @@ import java.util.Collections;
 import java.util.Map;
 import java.util.TreeMap;
 
-import static ua.com.javarush.cryptoanalyzer.constants.Alphabets.ALPHABET;
-import static ua.com.javarush.cryptoanalyzer.constants.Alphabets.ALPHABET_SIZE;
-import static ua.com.javarush.cryptoanalyzer.constants.ConsoleMessages.ERROR_READ_FILE;
-import static ua.com.javarush.cryptoanalyzer.constants.ConsoleMessages.FILE_NOT_FOUND;
+import static ua.com.javarush.cryptoanalyzer.constants.Alphabet.ALPHABET;
+import static ua.com.javarush.cryptoanalyzer.constants.Alphabet.ALPHABET_SIZE;
+import static ua.com.javarush.cryptoanalyzer.constants.ConsoleMessage.ERROR_READ_FILE;
+import static ua.com.javarush.cryptoanalyzer.constants.ConsoleMessage.FILE_NOT_FOUND;
 
 public class BruteForceDecoder {
     public static int calculatingEncryptionKey(String inputFilePath) {
