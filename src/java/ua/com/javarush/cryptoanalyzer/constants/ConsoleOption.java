@@ -1,6 +1,6 @@
 package ua.com.javarush.cryptoanalyzer.constants;
 
-public class ConsoleOptions {
+public class ConsoleOption {
     public static final String ENTER_OPTIONS = "Choose option: ";
     public static final String ENTER_INPUT_FILE = "Choose input file: ";
     public static final String ENTER_OUTPUT_FILE_NAME = "Choose output file name: ";

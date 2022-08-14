@@ -1,6 +1,6 @@
 package ua.com.javarush.cryptoanalyzer.consoleui;
 
-import static ua.com.javarush.cryptoanalyzer.constants.ConsoleMessages.ILLEGAL_OPERATION;
+import static ua.com.javarush.cryptoanalyzer.constants.ConsoleMessage.ILLEGAL_OPERATION;
 
 public enum Operation {
     EXIT("Q", "Exit"),

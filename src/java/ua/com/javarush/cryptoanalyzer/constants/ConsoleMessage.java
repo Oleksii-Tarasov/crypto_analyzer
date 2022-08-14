@@ -1,6 +1,6 @@
 package ua.com.javarush.cryptoanalyzer.constants;
 
-public class ConsoleMessages {
+public class ConsoleMessage {
     public static final String GREETINGS =
             """
             ********************************

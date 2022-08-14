@@ -9,11 +9,11 @@ import java.nio.file.InvalidPathException;
 import java.nio.file.Path;
 import java.util.Scanner;
 
-import static ua.com.javarush.cryptoanalyzer.constants.Alphabets.ALPHABET_SIZE;
+import static ua.com.javarush.cryptoanalyzer.constants.Alphabet.ALPHABET_SIZE;
 import static ua.com.javarush.cryptoanalyzer.constants.Common.DASH;
 import static ua.com.javarush.cryptoanalyzer.constants.Common.DOUBLE_SLASH;
-import static ua.com.javarush.cryptoanalyzer.constants.ConsoleMessages.*;
-import static ua.com.javarush.cryptoanalyzer.constants.ConsoleOptions.*;
+import static ua.com.javarush.cryptoanalyzer.constants.ConsoleMessage.*;
+import static ua.com.javarush.cryptoanalyzer.constants.ConsoleOption.*;
 
 public class ConsoleMenu {
     private final Scanner console = new Scanner(System.in);

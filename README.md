@@ -12,7 +12,7 @@ Project launch:
 
 `C:\>java -Dfile.encoding=UTF-8 -Dconsole.encoding=UTF-8 -jar cryptoanalyzer.jar`
 
-The executable `cryptoanalyzer_1.2.jar` file is located in the `dist` project directory.
+The executable `cryptoanalyzer.jar` file is located in the `dist` project directory.
 ___
 ###Restrictions
 The program works with .txt format files. With texts written in Cyrillic.
@@ -30,11 +30,10 @@ The package `consoleui` contains the class:
 data that the user has entered through the menu.
 
 The package `constants` contains the classes:
-- `Constants` - A common class for all constants. Contains nested classes:
-- `$ConsoleOption` - list of constant-options to work with the application menu.
-- `$ConsoleMessage` - list of constant-messages to the user via the console.
-- `$Alphabet` - class contains alphabet of Cyrillic symbols and some special characters.
-- `$Common` - class with special symbols.
+- `ConsoleOption` - list of constant-options to work with the application menu.
+- `ConsoleMessage` - list of constant-messages to the user via the console.
+- `Alphabet` - class contains alphabet of Cyrillic symbols and some special characters.
+- `Common` - class with special symbols.
 
 The package `cryptography` contains the classes:
 - `Encoder` - encrypting text information from a file, with encryption key. Create encrypted file.
